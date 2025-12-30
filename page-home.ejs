@@ -51,23 +51,6 @@
                 </button>
                 <!-- <a href="/dashboard" class="list-group-item list-group-item-action bg-dark text-white">Dashboard</a> -->
                 <!-- <a href="/settings" class="list-group-item list-group-item-action bg-dark text-white">Settings</a> -->
-
-
-                <div class="dropdown">
-                    <a class="btn btn-drop dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Category
-                    </a>
-
-                    <ul class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Admin</a>
-                        <a class="dropdown-item" href="#">Billing</a>
-                        <a class="dropdown-item" href="#">Bug</a>
-                        <a class="dropdown-item" href="#">Security</a>
-                        <a class="dropdown-item" href="#">Technical</a>
-                    </ul>
-                </div>
-
             </div>
         </div>
     </div>
@@ -81,13 +64,14 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Title</th>
                                     <th>Status</th>
                                     <th>Priority</th>
+                                    <th>Created</th>
                                     <th>Due</th>
                                     <th>Requester</th>
                                     <th>Assignee</th>
                                     <th>Category</th>
+                                    <th>View Ticket</th>
                                 </tr>
                             </thead>
 
@@ -108,14 +92,7 @@
                                         <% tickets.forEach((t)=> { %>
                                             <tr>
                                                 <td>
-                                                    <a class="btn btn-sm btn-outline-secondary"
-                                                        href="/tickets/<%= t._id %>">
-                                                        <%= t.ticketNumber %>
-                                                    </a>
-                                                </td>
-
-                                                <td>
-                                                    <%= t.title %>
+                                                    <%= t.ticketNumber %>
                                                 </td>
 
                                                 <td>
@@ -128,6 +105,9 @@
                                                     <%= t.priority %>
                                                 </td>
                                                 <td>
+                                                    <%= fmtDate(t.createdAt) %>
+                                                </td>
+                                                <td>
                                                     <%= fmtDate(t.dueDate) %>
                                                 </td>
                                                 <td>
@@ -138,6 +118,14 @@
                                                 </td>
                                                 <td>
                                                     <%= t.category %>
+                                                </td>
+
+                                                <td>
+                                                    <a class="btn btn-sm btn-outline-secondary"
+                                                        href="/tickets/<%= t._id %>">
+                                                        View
+                                                    </a>
+
                                                 </td>
                                             </tr>
                                             <% }); %>
@@ -209,12 +197,6 @@
                                     <option value="Bug">Bug</option>
                                     <option value="Security">Security</option>
                                 </select>
-                            </div>
-
-                            <div class="mb-1">
-                                <label for="title" class="form-label">Title</label>
-                                <input type="text" class="form-control form-control-lg" id="title" name="title"
-                                    placeholder="Brief title of ticket" required />
                             </div>
 
                             <div class="mb-1">

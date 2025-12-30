@@ -12,6 +12,7 @@ router.post("/create", async (req, res) => {
     const requester = String(req.body.requester || "").trim();
     const dueDate = req.body.dueDate ? new Date(req.body.dueDate) : null;
     const category = String(req.body.category || "").trim();
+    const title = String(req.body.title || "").trim();
     const subjectLine = String(req.body.subjectLine || "").trim();
     const description = String(req.body.description || "").trim();
     const priority = String(req.body.priority || "").trim();
@@ -21,6 +22,7 @@ router.post("/create", async (req, res) => {
       requester,
       dueDate,
       category,
+      title,
       subjectLine,
       description,
       priority,
@@ -53,6 +55,16 @@ router.get("/:id", async (req, res) => {
     console.error(err);
     return res.status(500).send("Failed to load ticket");
   }
+});
+//routes/tickets.js
+router.post("/newMessage", async (req, res) => {
+  const { ticketId, Name, message } = req.body;
+
+  await Ticket.findByIdAndUpdate(ticketId, {
+    $push: { messages: { name: Name, message } },
+  });
+
+  res.redirect(`/tickets/${ticketId}`);
 });
 
 module.exports = router;

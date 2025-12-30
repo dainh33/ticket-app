@@ -1,6 +1,17 @@
 // models/Ticket.js
 const mongoose = require("mongoose");
 
+const messageSchema = new mongoose.Schema(
+  {
+    name: { type: String, trim: true, required: true, maxlength: 60 },
+    message: { type: String, trim: true, required: true, maxlength: 2000 },
+  },
+  {
+    timestamps: { createdAt: true, updatedAt: false },
+    _id: true,
+  }
+);
+
 const ticketSchema = new mongoose.Schema(
   {
     ticketNumber: {
@@ -39,6 +50,12 @@ const ticketSchema = new mongoose.Schema(
       },
       required: true,
     },
+    title: {
+      type: String,
+      trim: true,
+      required: true,
+      maxlength: 60,
+    },
     subjectLine: {
       type: String,
       trim: true,
@@ -56,6 +73,7 @@ const ticketSchema = new mongoose.Schema(
       enum: ["Low", "Medium", "High", "Critical"],
       default: "Medium",
     },
+    messages: { type: [messageSchema], default: [] },
   },
   { timestamps: true }
 );

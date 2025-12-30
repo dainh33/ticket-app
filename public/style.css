@@ -1,5 +1,6 @@
 :root {
   --sidebar-width: 240px;
+  --sidebar-height: 600px;
 }
 
 #page-home {
@@ -117,4 +118,28 @@
   left: 0;
   top: 56px;
   overflow-y: auto;
+}
+
+.msg-thread-wrapper {
+  border: 2px solid black;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  background-color: white;
+
+  height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  min-width: 0;
+}
+
+.btn-drop {
+  border-radius: 0 !important;
+  background-color: #6b7280 !important;
+  color: white;
+}
+
+.sidebar {
+  height: 600px;
 }

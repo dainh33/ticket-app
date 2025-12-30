@@ -1,9 +1,6 @@
-
 //usage:  node .\scripts\seedTickets.js --reset
 
-
-
-/ scripts/seedTickets.js
+// scripts/seedTickets.js
 const path = require("path");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
@@ -28,6 +25,7 @@ async function main() {
   const categories = ["Billing", "Technical", "Admin", "Bug", "Security"];
   const statuses = ["Open", "In Progress", "Closed", "Review"];
   const priorities = ["Low", "Medium", "High", "Critical"];
+  const titles = ["title 1", "title 2", "title 3"];
 
   const now = new Date();
   const requesters = [
@@ -50,6 +48,7 @@ async function main() {
       assignee: assignees[i % assignees.length],
       dueDate: new Date(now.getTime() + (i + 3) * 24 * 60 * 60 * 1000),
       category: categories[i % categories.length],
+      title: titles[i % titles.length],
       subjectLine: `Example ticket #${ticketNumber}`,
       description: `Seeded example ticket ${ticketNumber} for testing pagination and display.`,
     };
