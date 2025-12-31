@@ -75,6 +75,7 @@ app.get("/", async (req, res) => {
   });
 });
 app.get("/login", async (req, res) => res.render("pages/login"));
+app.get("/landing", async (req, res) => res.render("pages/page-landing"));
 app.get("/admin", async (req, res) => res.render("pages/create-user-admin"));
 
 //Mount login/admin POST routes

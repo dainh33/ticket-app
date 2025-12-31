@@ -1,297 +1,258 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <title>Home</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="/style.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap"
-        rel="stylesheet">
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg">
-        <div class="container-fluid mx-5 px-5">
-            <img class="navbar-brand logo" src="/icons/logo2.png" href="/">
+<%- include("../partials/header", { title: "Overview" }) %>
 
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
-                aria-controls="mainNavbar" aria-expanded="false">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <body id="page-home">
+        <section class="">
+            <div class="d-flex height-align">
+                <!-- left navbar -->
+                <nav class="nav flex-column border-end p-3 flex-shrink-0 sidebar text-white-gray">
+                    <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="/">
+                        <img class="icon" src="/icons/analytics.png">
+                        <span>Dashboard</span>
+                    </a>
+                    <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="/">
+                        <img class="icon-clip" src="/icons/mytickets.png">
+                        <span>My Tickets</span>
+                    </a>
 
-            <div class="collapse navbar-collapse" id="mainNavbar">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/favorites">All Tickets</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</head>
+                    <a class="nav-link d-flex align-items-center justify-content-between text-white-gray"
+                        data-bs-toggle="collapse" href="#projectsCollapse" role="button" aria-expanded="false"
+                        aria-controls="projectsCollapse">
 
-<body id="page-home">
-    <section class="">
-        <div class="d-flex height-align">
-            <!-- left navbar -->
-            <nav class="nav flex-column border-end p-3 flex-shrink-0 sidebar text-white-gray">
-                <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="/">
-                    <img class="icon" src="/icons/analytics.png">
-                    <span>Dashboard</span>
-                </a>
-                <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="/">
-                    <img class="icon-clip" src="/icons/mytickets.png">
-                    <span>My Tickets</span>
-                </a>
+                        <span class="d-flex align-items-center gap-2">
+                            <img class="icon-clip" src="/icons/dashboard.png" alt="" aria-hidden="true">
+                            <span>Categories ▾</span>
+                        </span>
+                    </a>
 
-                <a class="nav-link d-flex align-items-center justify-content-between text-white-gray"
-                    data-bs-toggle="collapse" href="#projectsCollapse" role="button" aria-expanded="false"
-                    aria-controls="projectsCollapse">
+                    <div class="collapse ps-3" id="projectsCollapse">
+                        <a class="nav-link text-white-gray <%= category===" Admin" ? "active" : "" %>"
+                            href="/?category=Admin&page=1&perPage=<%= perPage %>">Admin</a>
 
-                    <span class="d-flex align-items-center gap-2">
-                        <img class="icon-clip" src="/icons/dashboard.png" alt="" aria-hidden="true">
-                        <span>Categories ▾</span>
-                    </span>
-                </a>
+                        <a class="nav-link text-white-gray <%= category===" Billing" ? "active" : "" %>"
+                            href="/?category=Billing&page=1&perPage=<%= perPage %>">Billing</a>
 
-                <div class="collapse ps-3" id="projectsCollapse">
-                    <a class="nav-link text-white-gray <%= category===" Admin" ? "active" : "" %>"
-                        href="/?category=Admin&page=1&perPage=<%= perPage %>">Admin</a>
+                        <a class="nav-link text-white-gray <%= category===" Bug" ? "active" : "" %>"
+                            href="/?category=Bug&page=1&perPage=<%= perPage %>">Bug</a>
 
-                    <a class="nav-link text-white-gray <%= category===" Billing" ? "active" : "" %>"
-                        href="/?category=Billing&page=1&perPage=<%= perPage %>">Billing</a>
+                        <a class="nav-link text-white-gray <%= category===" Security" ? "active" : "" %>"
+                            href="/?category=Security&page=1&perPage=<%= perPage %>">Security</a>
 
-                    <a class="nav-link text-white-gray <%= category===" Bug" ? "active" : "" %>"
-                        href="/?category=Bug&page=1&perPage=<%= perPage %>">Bug</a>
+                        <a class="nav-link text-white-gray <%= category===" Technical" ? "active" : "" %>"
+                            href="/?category=Technical&page=1&perPage=<%= perPage %>">Technical</a>
+                    </div>
 
-                    <a class="nav-link text-white-gray <%= category===" Security" ? "active" : "" %>"
-                        href="/?category=Security&page=1&perPage=<%= perPage %>">Security</a>
+                    <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="/">
+                        <img class="icon-clip" src="/icons/settings.png">
+                        <span>Settings</span>
+                    </a>
 
-                    <a class="nav-link text-white-gray <%= category===" Technical" ? "active" : "" %>"
-                        href="/?category=Technical&page=1&perPage=<%= perPage %>">Technical</a>
-                </div>
-
-                <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="/">
-                    <img class="icon-clip" src="/icons/settings.png">
-                    <span>Settings</span>
-                </a>
-
-                <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="/">
-                    <img class="icon-clip" src="/icons/chat.png">
-                    <span>Messages</span>
-                </a>
-            </nav>
-
-            <!-- ticket table -->
-            <main class="flex-grow-1 d-flex flex-column p-3">
-                <div class="tickets-wrap flex-grow-1 overflow-auto bg-white-gray">
-                    <table class="tickets bg-white-gray">
-                        <thead class="bg-gray">
-                            <tr>
-                                <th>#</th>
-                                <th>Title</th>
-                                <th>Status</th>
-                                <th>Priority</th>
-                                <th>Due</th>
-                                <th>Requester</th>
-                                <th>Assignee</th>
-                                <th>Category</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <% const statusClass=(s)=> {
-                                if (!s) return "open";
-                                const x = s.toLowerCase();
-                                if (x === "in progress") return "progress";
-                                if (x === "closed") return "closed";
-                                if (x === "review") return "review";
-                                return "open";
-                                };
-
-                                const fmtDate = (d) => (d ? new Date(d).toISOString().slice(0, 10) : "");
-                                %>
-
-                                <% if (tickets && tickets.length) { %>
-                                    <% tickets.forEach((t)=> { %>
-                                        <tr>
-                                            <td>
-                                                <a class="btn btn-sm btn-outline-secondary"
-                                                    href="/tickets/<%= t._id %>">
-                                                    <%= t.ticketNumber %>
-                                                </a>
-                                            </td>
-
-                                            <td>
-                                                <%= t.title %>
-                                            </td>
-
-                                            <td>
-                                                <span class="pill <%= statusClass(t.status) %>">
-                                                    <%= t.status %>
-                                                </span>
-                                            </td>
-
-                                            <td>
-                                                <%= t.priority %>
-                                            </td>
-                                            <td>
-                                                <%= fmtDate(t.dueDate) %>
-                                            </td>
-                                            <td>
-                                                <%= t.requester %>
-                                            </td>
-                                            <td>
-                                                <%= t.assignee || "Unclaimed" %>
-                                            </td>
-                                            <td>
-                                                <%= t.category %>
-                                            </td>
-                                        </tr>
-                                        <% }); %>
-                                            <% } else { %>
-                                                <tr>
-                                                    <td colspan="9" class="text-center py-4">No tickets yet.</td>
-                                                </tr>
-                                                <% } %>
-                        </tbody>
-                    </table>
-                </div>
-
-                <nav class="mt-3 d-flex flex-row align-items-center justify-content-end">
-                    <form method="GET" action="/" class="d-flex justify-content-end align-items-center gap-2">
-                        <label for="perPage" class="fs-16 text-white mb-0">Rows per page</label>
-
-                        <input type="hidden" name="category" value="<%= category %>">
-                        <input type="hidden" name="page" value="1">
-
-                        <select id="perPage" name="perPage" class="form-select form-select-sm me-3 fs-16 w-auto"
-                            onchange="this.form.submit()">
-                            <% perPageOptions.forEach(n=> { %>
-                                <option value="<%= n %>" <%=perPage===n ? "selected" : "" %>><%= n %>
-                                </option>
-                                <% }) %>
-                        </select>
-
-                        <input type="hidden" name="page" value="1">
-                    </form>
-                    <ul class="pagination justify-content-end mb-0">
-                        <li class="page-item <%= hasPrev ? "" : " disabled" %>">
-                            <a class="page-link"
-                                href="/?page=<%= page - 1 %>&perPage=<%= perPage %>&category=<%= category %>">Previous</a>
-                        </li>
-
-                        <li class="page-item disabled">
-                            <span class="page-link text-dark">Page <%= page %> of <%= totalPages %></span>
-                        </li>
-
-                        <li class="page-item <%= hasNext ? "" : " disabled" %>">
-                            <a class="page-link"
-                                href="/?page=<%= page + 1 %>&perPage=<%= perPage %>&category=<%= category %>">Next</a>
-                        </li>
-                    </ul>
+                    <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="/">
+                        <img class="icon-clip" src="/icons/chat.png">
+                        <span>Messages</span>
+                    </a>
                 </nav>
-            </main>
-        </div>
-    </section>
 
-    <div id="addTicketModal" class="modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Create New Ticket</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="d-flex align-items-top justify-content-center">
-                        <form method="POST" action="/tickets/create">
-                            <div class="mb-1">
-                                <label for="ticketNumber" class="form-label">Ticket Number</label>
-                                <input type="text" inputmode="numeric" pattern="\d{4}" maxlength="4"
-                                    class="form-control form-control-lg" id="ticketNumber" name="ticketNumber"
-                                    placeholder="0001" required />
-                            </div>
+                <!-- ticket table -->
+                <main class="flex-grow-1 d-flex flex-column p-3">
+                    <div class="tickets-wrap flex-grow-1 overflow-auto bg-white-gray">
+                        <table class="tickets bg-white-gray">
+                            <thead class="bg-gray">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Status</th>
+                                    <th>Priority</th>
+                                    <th>Due</th>
+                                    <th>Requester</th>
+                                    <th>Assignee</th>
+                                    <th>Category</th>
+                                </tr>
+                            </thead>
 
-                            <div class="mb-1">
-                                <label for="requester" class="form-label">Requester</label>
-                                <input type="text" class="form-control form-control-lg" id="requester" name="requester"
-                                    placeholder="First Last" required />
-                            </div>
+                            <tbody>
+                                <% const statusClass=(s)=> {
+                                    if (!s) return "open";
+                                    const x = s.toLowerCase();
+                                    if (x === "in progress") return "progress";
+                                    if (x === "closed") return "closed";
+                                    if (x === "review") return "review";
+                                    return "open";
+                                    };
 
-                            <div class="mb-1">
-                                <label for="dueDate" class="form-label">Due Date</label>
-                                <input type="date" class="form-control form-control-lg" id="dueDate" name="dueDate"
-                                    placeholder="basic, manager, admin" required />
-                            </div>
+                                    const fmtDate = (d) => (d ? new Date(d).toISOString().slice(0, 10) : "");
+                                    %>
 
-                            <div class="mb-1">
-                                <label for="category" class="form-label">Category</label>
-                                <select type="" class="form-control form-control-lg" id="category" name="category"
-                                    required>
-                                    <option value="Billing">Billing</option>
-                                    <option value="Technical">Technical</option>
-                                    <option value="Admin">Admin</option>
-                                    <option value="Bug">Bug</option>
-                                    <option value="Security">Security</option>
-                                </select>
-                            </div>
+                                    <% if (tickets && tickets.length) { %>
+                                        <% tickets.forEach((t)=> { %>
+                                            <tr>
+                                                <td>
+                                                    <a class="btn btn-sm btn-outline-secondary"
+                                                        href="/tickets/<%= t._id %>">
+                                                        <%= t.ticketNumber %>
+                                                    </a>
+                                                </td>
 
-                            <div class="mb-1">
-                                <label for="title" class="form-label">Title</label>
-                                <input type="text" class="form-control form-control-lg" id="title" name="title"
-                                    placeholder="Brief title of ticket" required />
-                            </div>
+                                                <td>
+                                                    <%= t.title %>
+                                                </td>
 
-                            <div class="mb-1">
-                                <label for="subjectLine" class="form-label">Subject Line</label>
-                                <input type="text" class="form-control form-control-lg" id="subjectLine"
-                                    name="subjectLine" placeholder="Ticket for Bug on www.example.com" required />
-                            </div>
+                                                <td>
+                                                    <span class="pill <%= statusClass(t.status) %>">
+                                                        <%= t.status %>
+                                                    </span>
+                                                </td>
 
-                            <div class="mb-1">
-                                <label for="description" class="form-label">Description</label>
-                                <textarea type="text" class="form-control form-control-lg" id="description"
-                                    name="description" placeholder="This ticket requires you to ..."
-                                    required></textarea>
-                            </div>
+                                                <td>
+                                                    <%= t.priority %>
+                                                </td>
+                                                <td>
+                                                    <%= fmtDate(t.dueDate) %>
+                                                </td>
+                                                <td>
+                                                    <%= t.requester %>
+                                                </td>
+                                                <td>
+                                                    <%= t.assignee || "Unclaimed" %>
+                                                </td>
+                                                <td>
+                                                    <%= t.category %>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
+                                                <% } else { %>
+                                                    <tr>
+                                                        <td colspan="9" class="text-center py-4">No tickets yet.</td>
+                                                    </tr>
+                                                    <% } %>
+                            </tbody>
+                        </table>
+                    </div>
 
-                            <div class="mb-3">
-                                <label for="priority" class="form-label">Priority</label>
-                                <select type="" class="form-control form-control-lg" id="priority" name="priority"
-                                    required>
-                                    <option value="Low">Low</option>
-                                    <option value="Medium">Medium</option>
-                                    <option value="High">High</option>
-                                    <option value="Critical">Critical</option>
-                                </select>
-                            </div>
+                    <nav class="mt-3 d-flex flex-row align-items-center justify-content-end">
+                        <form method="GET" action="/" class="d-flex justify-content-end align-items-center gap-2">
+                            <label for="perPage" class="fs-16 text-white mb-0">Rows per page</label>
 
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary btn-lg">
-                                    Add Ticket
-                                </button>
-                            </div>
+                            <input type="hidden" name="category" value="<%= category %>">
+                            <input type="hidden" name="page" value="1">
+
+                            <select id="perPage" name="perPage" class="form-select form-select-sm me-3 fs-16 w-auto"
+                                onchange="this.form.submit()">
+                                <% perPageOptions.forEach(n=> { %>
+                                    <option value="<%= n %>" <%=perPage===n ? "selected" : "" %>><%= n %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+
+                            <input type="hidden" name="page" value="1">
                         </form>
+                        <ul class="pagination justify-content-end mb-0">
+                            <li class="page-item <%= hasPrev ? "" : " disabled" %>">
+                                <a class="page-link"
+                                    href="/?page=<%= page - 1 %>&perPage=<%= perPage %>&category=<%= category %>">Previous</a>
+                            </li>
+
+                            <li class="page-item disabled">
+                                <span class="page-link text-dark">Page <%= page %> of <%= totalPages %></span>
+                            </li>
+
+                            <li class="page-item <%= hasNext ? "" : " disabled" %>">
+                                <a class="page-link"
+                                    href="/?page=<%= page + 1 %>&perPage=<%= perPage %>&category=<%= category %>">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </main>
+            </div>
+        </section>
+
+        <div id="addTicketModal" class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create New Ticket</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex align-items-top justify-content-center">
+                            <form method="POST" action="/tickets/create">
+                                <div class="mb-1">
+                                    <label for="ticketNumber" class="form-label">Ticket Number</label>
+                                    <input type="text" inputmode="numeric" pattern="\d{4}" maxlength="4"
+                                        class="form-control form-control-lg" id="ticketNumber" name="ticketNumber"
+                                        placeholder="0001" required />
+                                </div>
+
+                                <div class="mb-1">
+                                    <label for="requester" class="form-label">Requester</label>
+                                    <input type="text" class="form-control form-control-lg" id="requester"
+                                        name="requester" placeholder="First Last" required />
+                                </div>
+
+                                <div class="mb-1">
+                                    <label for="dueDate" class="form-label">Due Date</label>
+                                    <input type="date" class="form-control form-control-lg" id="dueDate" name="dueDate"
+                                        placeholder="basic, manager, admin" required />
+                                </div>
+
+                                <div class="mb-1">
+                                    <label for="category" class="form-label">Category</label>
+                                    <select type="" class="form-control form-control-lg" id="category" name="category"
+                                        required>
+                                        <option value="Billing">Billing</option>
+                                        <option value="Technical">Technical</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Bug">Bug</option>
+                                        <option value="Security">Security</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-1">
+                                    <label for="title" class="form-label">Title</label>
+                                    <input type="text" class="form-control form-control-lg" id="title" name="title"
+                                        placeholder="Brief title of ticket" required />
+                                </div>
+
+                                <div class="mb-1">
+                                    <label for="subjectLine" class="form-label">Subject Line</label>
+                                    <input type="text" class="form-control form-control-lg" id="subjectLine"
+                                        name="subjectLine" placeholder="Ticket for Bug on www.example.com" required />
+                                </div>
+
+                                <div class="mb-1">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea type="text" class="form-control form-control-lg" id="description"
+                                        name="description" placeholder="This ticket requires you to ..."
+                                        required></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="priority" class="form-label">Priority</label>
+                                    <select type="" class="form-control form-control-lg" id="priority" name="priority"
+                                        required>
+                                        <option value="Low">Low</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="High">High</option>
+                                        <option value="Critical">Critical</option>
+                                    </select>
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        Add Ticket
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
 
-</body>
+    </body>
 
-</html>
+    </html>

@@ -153,7 +153,7 @@
 .nav-col {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* left align */
+  align-items: flex-start;
   background-color: black;
   width: 250px;
   height: 100%;
@@ -166,7 +166,7 @@ body {
 
 body {
   margin: 0;
-  overflow: hidden; /* no page scroll */
+  overflow: hidden;
 }
 
 .height-align {
