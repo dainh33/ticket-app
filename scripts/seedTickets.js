@@ -37,7 +37,7 @@ async function main() {
   ];
   const assignees = ["Unclaimed", "A. Agent", "B. Agent", "C. Agent"];
 
-  const tickets = Array.from({ length: 10 }, (_, i) => {
+  const tickets = Array.from({ length: 50 }, (_, i) => {
     const ticketNumber = String(1000 + i); // 4 digits
 
     return {

@@ -1,10 +1,12 @@
 :root {
   --sidebar-width: 240px;
   --sidebar-height: 600px;
+  --navy: #182b4a;
+  --white-gray: #cad2de;
 }
 
 #page-home {
-  background-color: darkgrey;
+  background-color: var(--navy);
   height: 100vh;
 }
 
@@ -44,6 +46,7 @@
 .tickets thead tr {
   height: var(--head-h);
 }
+
 .tickets th {
   text-align: left;
   font-size: 12px;
@@ -71,6 +74,7 @@
 .tickets tbody tr {
   height: var(--row-h);
 }
+
 .tickets td {
   height: var(--row-h);
   padding: 0 16px;
@@ -95,18 +99,22 @@
   font-size: 12px;
   line-height: 1;
 }
+
 .pill.open {
   background: #e8f2ff;
   color: black;
 }
+
 .pill.progress {
   background: #fff3d6;
   color: black;
 }
+
 .pill.closed {
   background: #a0ee8d;
   color: black;
 }
+
 .pill.review {
   background: #986acc;
   color: black;
@@ -114,9 +122,7 @@
 
 .side-nav {
   width: 150px;
-  position: absolute;
-  left: 0;
-  top: 56px;
+  position: relative;
   overflow-y: auto;
 }
 
@@ -142,4 +148,101 @@
 
 .sidebar {
   height: 600px;
+}
+
+.nav-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* left align */
+  background-color: black;
+  width: 250px;
+  height: 100%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden; /* no page scroll */
+}
+
+.height-align {
+  height: calc(100vh - 72px);
+}
+
+.sidebar {
+  height: calc(100vh - 72px);
+  width: 260px;
+  overflow: auto;
+}
+
+.height-align main {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.tickets-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+.tickets thead th {
+  position: sticky;
+  top: 0;
+  background: rgb(175, 173, 173);
+  z-index: 2;
+  color: white !important;
+}
+
+.form-select {
+  height: 38px;
+}
+
+.fs-16 {
+  font-size: 16px !important;
+}
+
+.text-white-gray {
+  color: var(--white-gray) !important;
+}
+
+.icon {
+  width: 16px;
+  height: auto;
+}
+
+.icon-clip {
+  width: 16px;
+  height: auto;
+}
+
+.tickets-wrap {
+  overflow: auto;
+  scrollbar-width: 0px;
+  -ms-overflow-style: none;
+}
+
+.tickets-wrap::-webkit-scrollbar {
+  display: none;
+}
+
+.bg-white-gray {
+  background-color: var(--white-gray) !important;
+}
+
+.bg-gray {
+  background-color: rgb(214, 207, 207) !important;
+}
+
+.logo {
+  height: 56px;
+  width: auto;
+}
+
+.bg {
+  background-color: #5c5c5e !important;
 }

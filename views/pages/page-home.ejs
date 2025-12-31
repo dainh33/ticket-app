@@ -13,9 +13,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap"
         rel="stylesheet">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg">
         <div class="container-fluid mx-5 px-5">
-            <a class="navbar-brand" href="/">Super Tickets</a>
+            <img class="navbar-brand logo" src="/icons/logo2.png" href="/">
+
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
                 aria-controls="mainNavbar" aria-expanded="false">
@@ -40,134 +41,154 @@
 </head>
 
 <body id="page-home">
-    <div class="side-nav bg-dark d-none d-lg-block">
-        <div class="sidebar bg-dark border-end">
-            <div class="list-group list-group-flush bg-dark">
-                <!-- <a href="/tickets" class="list-group-item list-group-item-action bg-dark text-white">Tickets</a> -->
-                <!-- <a href="/tickets/new" class="list-group-item list-group-item-action bg-dark text-white">New Ticket</a> -->
-                <button type="button" class="btn btn-primary bg-dark border-0 text-start ms-1" data-bs-toggle="modal"
-                    data-bs-target="#addTicketModal">
-                    New Ticket
-                </button>
-                <!-- <a href="/dashboard" class="list-group-item list-group-item-action bg-dark text-white">Dashboard</a> -->
-                <!-- <a href="/settings" class="list-group-item list-group-item-action bg-dark text-white">Settings</a> -->
+    <section class="">
+        <div class="d-flex height-align">
+            <!-- left navbar -->
+            <nav class="nav flex-column border-end p-3 flex-shrink-0 sidebar text-white-gray">
+                <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="/">
+                    <img class="icon" src="/icons/analytics.png">
+                    <span>Dashboard</span>
+                </a>
+                <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="/">
+                    <img class="icon-clip" src="/icons/mytickets.png">
+                    <span>My Tickets</span>
+                </a>
 
+                <a class="nav-link d-flex align-items-center justify-content-between text-white-gray"
+                    data-bs-toggle="collapse" href="#projectsCollapse" role="button" aria-expanded="false"
+                    aria-controls="projectsCollapse">
 
-                <div class="dropdown">
-                    <a class="btn btn-drop dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Category
-                    </a>
+                    <span class="d-flex align-items-center gap-2">
+                        <img class="icon-clip" src="/icons/dashboard.png" alt="" aria-hidden="true">
+                        <span>Categories ▾</span>
+                    </span>
+                </a>
 
-                    <ul class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Admin</a>
-                        <a class="dropdown-item" href="#">Billing</a>
-                        <a class="dropdown-item" href="#">Bug</a>
-                        <a class="dropdown-item" href="#">Security</a>
-                        <a class="dropdown-item" href="#">Technical</a>
-                    </ul>
+                <div class="collapse ps-3" id="projectsCollapse">
+                    <a class="nav-link text-white-gray" href="#">Admin</a>
+                    <a class="nav-link text-white-gray" href="#">Billing</a>
+                    <a class="nav-link text-white-gray" href="#">Bug</a>
+                    <a class="nav-link text-white-gray" href="#">Security</a>
+                    <a class="nav-link text-white-gray" href="#">Technical</a>
                 </div>
 
-            </div>
-        </div>
-    </div>
+                <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="/">
+                    <img class="icon-clip" src="/icons/settings.png">
+                    <span>Settings</span>
+                </a>
 
-    <section class="mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="tickets-wrap">
-                        <table class="tickets">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Title</th>
-                                    <th>Status</th>
-                                    <th>Priority</th>
-                                    <th>Due</th>
-                                    <th>Requester</th>
-                                    <th>Assignee</th>
-                                    <th>Category</th>
-                                </tr>
-                            </thead>
+                <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="/">
+                    <img class="icon-clip" src="/icons/chat.png">
+                    <span>Messages</span>
+                </a>
+            </nav>
 
-                            <tbody>
-                                <% const statusClass=(s)=> {
-                                    if (!s) return "open";
-                                    const x = s.toLowerCase();
-                                    if (x === "in progress") return "progress";
-                                    if (x === "closed") return "closed";
-                                    if (x === "review") return "review";
-                                    return "open";
-                                    };
+            <!-- ticket table -->
+            <main class="flex-grow-1 d-flex flex-column p-3">
+                <div class="tickets-wrap flex-grow-1 overflow-auto bg-white-gray">
+                    <table class="tickets bg-white-gray">
+                        <thead class="bg-gray">
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                                <th>Due</th>
+                                <th>Requester</th>
+                                <th>Assignee</th>
+                                <th>Category</th>
+                            </tr>
+                        </thead>
 
-                                    const fmtDate = (d) => (d ? new Date(d).toISOString().slice(0, 10) : "");
-                                    %>
+                        <tbody>
+                            <% const statusClass=(s)=> {
+                                if (!s) return "open";
+                                const x = s.toLowerCase();
+                                if (x === "in progress") return "progress";
+                                if (x === "closed") return "closed";
+                                if (x === "review") return "review";
+                                return "open";
+                                };
 
-                                    <% if (tickets && tickets.length) { %>
-                                        <% tickets.forEach((t)=> { %>
-                                            <tr>
-                                                <td>
-                                                    <a class="btn btn-sm btn-outline-secondary"
-                                                        href="/tickets/<%= t._id %>">
-                                                        <%= t.ticketNumber %>
-                                                    </a>
-                                                </td>
+                                const fmtDate = (d) => (d ? new Date(d).toISOString().slice(0, 10) : "");
+                                %>
 
-                                                <td>
-                                                    <%= t.title %>
-                                                </td>
+                                <% if (tickets && tickets.length) { %>
+                                    <% tickets.forEach((t)=> { %>
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-sm btn-outline-secondary"
+                                                    href="/tickets/<%= t._id %>">
+                                                    <%= t.ticketNumber %>
+                                                </a>
+                                            </td>
 
-                                                <td>
-                                                    <span class="pill <%= statusClass(t.status) %>">
-                                                        <%= t.status %>
-                                                    </span>
-                                                </td>
+                                            <td>
+                                                <%= t.title %>
+                                            </td>
 
-                                                <td>
-                                                    <%= t.priority %>
-                                                </td>
-                                                <td>
-                                                    <%= fmtDate(t.dueDate) %>
-                                                </td>
-                                                <td>
-                                                    <%= t.requester %>
-                                                </td>
-                                                <td>
-                                                    <%= t.assignee || "Unclaimed" %>
-                                                </td>
-                                                <td>
-                                                    <%= t.category %>
-                                                </td>
-                                            </tr>
-                                            <% }); %>
-                                                <% } else { %>
-                                                    <tr>
-                                                        <td colspan="9" class="text-center py-4">No tickets yet.</td>
-                                                    </tr>
-                                                    <% } %>
-                            </tbody>
-                        </table>
-                    </div>
+                                            <td>
+                                                <span class="pill <%= statusClass(t.status) %>">
+                                                    <%= t.status %>
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                <%= t.priority %>
+                                            </td>
+                                            <td>
+                                                <%= fmtDate(t.dueDate) %>
+                                            </td>
+                                            <td>
+                                                <%= t.requester %>
+                                            </td>
+                                            <td>
+                                                <%= t.assignee || "Unclaimed" %>
+                                            </td>
+                                            <td>
+                                                <%= t.category %>
+                                            </td>
+                                        </tr>
+                                        <% }); %>
+                                            <% } else { %>
+                                                <tr>
+                                                    <td colspan="9" class="text-center py-4">No tickets yet.</td>
+                                                </tr>
+                                                <% } %>
+                        </tbody>
+                    </table>
                 </div>
-                <nav class="mt-3">
-                    <ul class="pagination justify-content-end">
+
+                <nav class="mt-3 d-flex flex-row align-items-center justify-content-end">
+                    <form method="GET" action="/" class="d-flex justify-content-end align-items-center gap-2">
+                        <label for="perPage" class="fs-16 text-white mb-0">Rows per page</label>
+
+                        <select id="perPage" name="perPage" class="form-select form-select-sm me-3 fs-16 w-auto"
+                            onchange="this.form.submit()">
+                            <% perPageOptions.forEach(n=> { %>
+                                <option value="<%= n %>" <%=perPage===n ? "selected" : "" %>><%= n %>
+                                </option>
+                                <% }) %>
+                        </select>
+
+                        <input type="hidden" name="page" value="1">
+                    </form>
+                    <ul class="pagination justify-content-end mb-0">
                         <li class="page-item <%= hasPrev ? "" : " disabled" %>">
-                            <a class="page-link" href="/?page=<%= page - 1 %>">Previous</a>
+                            <a class="page-link" href="/?page=<%= page - 1 %>&perPage=<%= perPage %>">Previous</a>
                         </li>
 
                         <li class="page-item disabled">
-                            <span class="page-link">Page <%= page %> of <%= totalPages %></span>
+                            <span class="page-link text-dark">Page <%= page %> of <%= totalPages %></span>
                         </li>
 
                         <li class="page-item <%= hasNext ? "" : " disabled" %>">
-                            <a class="page-link" href="/?page=<%= page + 1 %>">Next</a>
+                            <a class="page-link" href="/?page=<%= page + 1 %>&perPage=<%= perPage %>">Next</a>
                         </li>
                     </ul>
                 </nav>
-            </div>
+            </main>
         </div>
-
     </section>
 
     <div id="addTicketModal" class="modal" tabindex="-1">
@@ -249,10 +270,6 @@
                         </form>
                     </div>
                 </div>
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div> -->
             </div>
         </div>
     </div>
