@@ -65,11 +65,20 @@
                 </a>
 
                 <div class="collapse ps-3" id="projectsCollapse">
-                    <a class="nav-link text-white-gray" href="#">Admin</a>
-                    <a class="nav-link text-white-gray" href="#">Billing</a>
-                    <a class="nav-link text-white-gray" href="#">Bug</a>
-                    <a class="nav-link text-white-gray" href="#">Security</a>
-                    <a class="nav-link text-white-gray" href="#">Technical</a>
+                    <a class="nav-link text-white-gray <%= category===" Admin" ? "active" : "" %>"
+                        href="/?category=Admin&page=1&perPage=<%= perPage %>">Admin</a>
+
+                    <a class="nav-link text-white-gray <%= category===" Billing" ? "active" : "" %>"
+                        href="/?category=Billing&page=1&perPage=<%= perPage %>">Billing</a>
+
+                    <a class="nav-link text-white-gray <%= category===" Bug" ? "active" : "" %>"
+                        href="/?category=Bug&page=1&perPage=<%= perPage %>">Bug</a>
+
+                    <a class="nav-link text-white-gray <%= category===" Security" ? "active" : "" %>"
+                        href="/?category=Security&page=1&perPage=<%= perPage %>">Security</a>
+
+                    <a class="nav-link text-white-gray <%= category===" Technical" ? "active" : "" %>"
+                        href="/?category=Technical&page=1&perPage=<%= perPage %>">Technical</a>
                 </div>
 
                 <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="/">
@@ -163,6 +172,9 @@
                     <form method="GET" action="/" class="d-flex justify-content-end align-items-center gap-2">
                         <label for="perPage" class="fs-16 text-white mb-0">Rows per page</label>
 
+                        <input type="hidden" name="category" value="<%= category %>">
+                        <input type="hidden" name="page" value="1">
+
                         <select id="perPage" name="perPage" class="form-select form-select-sm me-3 fs-16 w-auto"
                             onchange="this.form.submit()">
                             <% perPageOptions.forEach(n=> { %>
@@ -175,7 +187,8 @@
                     </form>
                     <ul class="pagination justify-content-end mb-0">
                         <li class="page-item <%= hasPrev ? "" : " disabled" %>">
-                            <a class="page-link" href="/?page=<%= page - 1 %>&perPage=<%= perPage %>">Previous</a>
+                            <a class="page-link"
+                                href="/?page=<%= page - 1 %>&perPage=<%= perPage %>&category=<%= category %>">Previous</a>
                         </li>
 
                         <li class="page-item disabled">
@@ -183,7 +196,8 @@
                         </li>
 
                         <li class="page-item <%= hasNext ? "" : " disabled" %>">
-                            <a class="page-link" href="/?page=<%= page + 1 %>&perPage=<%= perPage %>">Next</a>
+                            <a class="page-link"
+                                href="/?page=<%= page + 1 %>&perPage=<%= perPage %>&category=<%= category %>">Next</a>
                         </li>
                     </ul>
                 </nav>

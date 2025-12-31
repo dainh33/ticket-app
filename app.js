@@ -32,6 +32,13 @@ mongoose.connect(process.env.MONGO_URI);
 //pages
 app.get("/", async (req, res) => {
   const ALLOWED_LIMITS = [10, 25, 50, 100];
+  const ALLOWED_CATEGORIES = [
+    "Admin",
+    "Billing",
+    "Bug",
+    "Security",
+    "Technical",
+  ];
 
   let page = parseInt(req.query.page || "1", 10);
   if (isNaN(page) || page < 1) page = 1;
@@ -39,11 +46,17 @@ app.get("/", async (req, res) => {
   let limit = parseInt(req.query.perPage || "50", 10);
   if (!ALLOWED_LIMITS.includes(limit)) limit = 50;
 
+  let category = String(req.query.category || "").trim();
+  if (!ALLOWED_CATEGORIES.includes(category)) category = "";
+
+  const filter = {};
+  if (category) filter.category = category;
+
   const skip = (page - 1) * limit;
 
   const [tickets, total] = await Promise.all([
-    Ticket.find().sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
-    Ticket.countDocuments(),
+    Ticket.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+    Ticket.countDocuments(filter),
   ]);
 
   const totalPages = Math.max(1, Math.ceil(total / limit));
@@ -58,6 +71,7 @@ app.get("/", async (req, res) => {
     hasNext: page < totalPages,
     perPage: limit,
     perPageOptions: ALLOWED_LIMITS,
+    category,
   });
 });
 app.get("/login", async (req, res) => res.render("pages/login"));
