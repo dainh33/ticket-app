@@ -4,6 +4,13 @@ const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const Ticket = require("./models/Ticket");
+const session = require("express-session");
+const { MongoStore } = require("connect-mongo");
+const {
+  requireAuth,
+  redirectIfAuthed,
+  requireRole,
+} = require("./middleware/auth");
 
 if (process.argv.length != 3) {
   console.error(`Usage: ${process.argv[1]} portNumber`);
@@ -26,11 +33,33 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static("public"));
 
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+      collectionName: "sessions",
+    }),
+    cookie: {
+      httpOnly: true,
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60 * 24 * 7, //7day cookie lifetime
+      // secure: true, //https
+    },
+  })
+);
+
 //MongoDB
 mongoose.connect(process.env.MONGO_URI);
 
 //pages
 app.get("/", async (req, res) => {
+  if (!req.session?.userId) {
+    return res.render("pages/page-landing");
+  }
+
   const ALLOWED_LIMITS = [10, 25, 50, 100];
   const ALLOWED_CATEGORIES = [
     "Admin",
@@ -74,13 +103,16 @@ app.get("/", async (req, res) => {
     category,
   });
 });
-app.get("/login", async (req, res) => res.render("pages/login"));
+app.get("/login", redirectIfAuthed, (req, res) => res.render("pages/login"));
 app.get("/landing", async (req, res) => res.render("pages/page-landing"));
-app.get("/admin", async (req, res) => res.render("pages/create-user-admin"));
+app.get("/admin", requireRole("admin"), (req, res) =>
+  res.render("pages/create-user-admin")
+);
 
 //Mount login/admin POST routes
 app.use("/", require("./routes/login"));
-app.use("/tickets", require("./routes/tickets"));
+//require auth to view tickets
+app.use("/tickets", requireAuth, require("./routes/tickets"));
 
 app.listen(portNumber);
 console.log(`Web server started and running at http://localhost:${portNumber}`);

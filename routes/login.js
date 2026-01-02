@@ -5,6 +5,9 @@ const User = require("../models/User");
 
 //admin create user form submits here
 router.post("/admin-create", async (req, res) => {
+  if (!req.session?.userId || req.session.role !== "admin") {
+    return res.status(403).send("Forbidden");
+  }
   try {
     const email = String(req.body.email || "")
       .toLowerCase()
@@ -36,12 +39,28 @@ router.post("/login", async (req, res) => {
   const password = String(req.body.password || "");
 
   const user = await User.findOne({ email }).select("+passwordHash");
-  if (!user) return res.status(401).send("Invalid credentials");
+  if (!user)
+    return res
+      .status(401)
+      .render("pages/login", { error: "Invalid credentials" });
 
   const ok = await user.verifyPassword(password);
-  if (!ok) return res.status(401).send("Invalid credentials");
+  if (!ok)
+    return res
+      .status(401)
+      .render("pages/login", { error: "Invalid credentials" });
+
+  req.session.userId = user._id.toString();
+  req.session.role = user.role;
 
   return res.redirect("/");
 });
 
 module.exports = router;
+
+router.post("/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.clearCookie("connect.sid");
+    res.redirect("/");
+  });
+});

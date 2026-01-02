@@ -27,7 +27,6 @@
 .tickets-wrap {
   --row-h: 51px;
   --head-h: 44px;
-  --visible-rows: 8;
 }
 
 .tickets-wrap {
@@ -244,5 +243,5 @@ body {
 }
 
 .bg {
-  background-color: #5c5c5e !important;
+  background-color: white !important;
 }
