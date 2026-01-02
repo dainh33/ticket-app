@@ -6,6 +6,7 @@ const SALT_ROUNDS = parseInt(process.env.BCRYPT_SALT_ROUNDS || "12", 10);
 
 const userSchema = new mongoose.Schema(
   {
+    name: { type: String, required: true, trim: true, maxlength: 60 },
     email: {
       type: String,
       required: true,

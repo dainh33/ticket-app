@@ -10,11 +10,16 @@
                         <img class="icon" src="/icons/analytics.png">
                         <span>Dashboard</span>
                     </a>
-                    <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="/">
+                    <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="#" data-bs-toggle="modal"
+                        data-bs-target="#addTicketModal">
+                        <img class="icon-clip" src="/icons/add.png">
+                        <span>New Ticket</span>
+                    </a>
+                    <a class="nav-link d-flex align-items-center gap-2 text-white-gray"
+                        href="/?name=1&page=1&perPage=<%= perPage %>">
                         <img class="icon-clip" src="/icons/mytickets.png">
                         <span>My Tickets</span>
                     </a>
-
                     <a class="nav-link d-flex align-items-center justify-content-between text-white-gray"
                         data-bs-toggle="collapse" href="#projectsCollapse" role="button" aria-expanded="false"
                         aria-controls="projectsCollapse">

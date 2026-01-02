@@ -19,8 +19,8 @@ router.post("/admin-create", async (req, res) => {
 
     const allowedRoles = new Set(["basic", "manager", "admin"]);
     const role = allowedRoles.has(roleRaw) ? roleRaw : "basic";
-
-    const user = new User({ email, role });
+    const name = String(req.body.name || "").trim();
+    const user = new User({ name, email, role });
     await user.setPassword(password);
     await user.save();
 
@@ -51,12 +51,12 @@ router.post("/login", async (req, res) => {
       .render("pages/login", { error: "Invalid credentials" });
 
   req.session.userId = user._id.toString();
+  req.session.userEmail = user.email;
+  req.session.userName = user.name;
   req.session.role = user.role;
 
   return res.redirect("/");
 });
-
-module.exports = router;
 
 router.post("/logout", (req, res) => {
   req.session.destroy(() => {
@@ -64,3 +64,5 @@ router.post("/logout", (req, res) => {
     res.redirect("/");
   });
 });
+
+module.exports = router;

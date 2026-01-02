@@ -48,18 +48,27 @@
             };
             %>
 
-            <body id="page-home">
-                <section>
-                    <div class="container my-5">
-                        <div class="row">
-                            <div class="col-lg-8 bg-white-gray">
-                                <h2 class="mb-2">Ticket #<%= ticket.ticketNumber %> - <%=ticket.title%>
+            <body id="page-ticket-view" class="overflow-hidden bg-navy">
+                <section class="ticket-view-shell mt-4">
+                    <div class="container h-100 py-4">
+                        <div class="row h-100">
+                            <div class="col-lg-8 ticket-details bg-white-gray py-2">
+                                <h2 class="mb-2 fw-bold">Ticket #<%= ticket.ticketNumber %> - <%=ticket.title%>
                                 </h2>
                                 <h3>Subject: <%= ticket.subjectLine %>
                                 </h3>
                                 <h4>Status: <%= ticket.status %>
                                 </h4>
-                                <h4>Assignee: <%= ticket.assignee %>
+                                <h4>
+                                    Assignee: <%= ticket.assignee %>
+                                        <% if (ticket.assignee==="Unclaimed" ) { %>
+                                            <form method="POST" action="/tickets/<%= ticket._id %>/claim"
+                                                class="d-inline ms-2">
+                                                <button type="submit" class="btn btn-success btn-sm">Claim</button>
+                                            </form>
+                                            <% } else if (userName && ticket.assignee===userName) { %>
+                                                <span class="badge bg-success ms-2">You</span>
+                                                <% } %>
                                 </h4>
                                 <h4>Requester: <%= ticket.requester %>
                                 </h4>

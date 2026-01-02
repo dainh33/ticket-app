@@ -131,12 +131,13 @@
   overflow-wrap: anywhere;
   word-break: break-word;
   background-color: white;
+  border-radius: 12px;
 
-  height: 600px;
+  height: 80%;
   overflow-y: auto;
   overflow-x: hidden;
 
-  min-width: 0;
+  max-height: 500px !important;
 }
 
 .btn-drop {
@@ -244,4 +245,28 @@ body {
 
 .bg {
   background-color: white !important;
+}
+
+#page-ticket-view {
+  height: 100vh;
+  overflow: hidden;
+}
+
+#page-ticket-view .ticket-view-shell {
+  height: calc(100vh - 32px);
+}
+#page-ticket-view .ticket-view-shell .container,
+#page-ticket-view .ticket-view-shell .row {
+  height: 80%;
+}
+
+#page-ticket-view .ticket-details {
+  height: 80%;
+  overflow-y: auto;
+  border-radius: 12px;
+  max-height: 500px !important;
+}
+
+.bg-navy {
+  background-color: var(--navy);
 }

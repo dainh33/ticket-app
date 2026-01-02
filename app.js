@@ -78,8 +78,11 @@ app.get("/", async (req, res) => {
   let category = String(req.query.category || "").trim();
   if (!ALLOWED_CATEGORIES.includes(category)) category = "";
 
+  const name = req.query.name === "1";
+
   const filter = {};
   if (category) filter.category = category;
+  if (name) filter.assignee = req.session.userName;
 
   const skip = (page - 1) * limit;
 
@@ -101,6 +104,7 @@ app.get("/", async (req, res) => {
     perPage: limit,
     perPageOptions: ALLOWED_LIMITS,
     category,
+    name,
   });
 });
 app.get("/login", redirectIfAuthed, (req, res) => res.render("pages/login"));
@@ -108,6 +112,12 @@ app.get("/landing", async (req, res) => res.render("pages/page-landing"));
 app.get("/admin", requireRole("admin"), (req, res) =>
   res.render("pages/create-user-admin")
 );
+
+app.use((req, res, next) => {
+  res.locals.userEmail = req.session?.userEmail || null;
+  res.locals.userName = req.session?.userName || null;
+  next();
+});
 
 //Mount login/admin POST routes
 app.use("/", require("./routes/login"));
