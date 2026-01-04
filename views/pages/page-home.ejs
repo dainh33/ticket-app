@@ -4,7 +4,6 @@
         <section class="">
             <div class="d-flex height-align">
                 <!-- left navbar -->
-
                 <nav class="nav flex-column border-end p-3 flex-shrink-0 sidebar text-white-gray">
                     <div class="text-center">
                         <img class="navbar-brand logo text-center" src="/icons/test-logo.png" href="/">
@@ -76,16 +75,94 @@
                             </div>
                             <div class="col-8">
                                 <%= user.name %>
-                                    <form method="POST" action="/logout">
+                                    <!-- <form method="POST" action="/logout">
                                         <button class="btn logout-btn">Logout</button>
-                                    </form>
+                                    </form> -->
                             </div>
                         </div>
                     </div>
                 </nav>
 
                 <!-- ticket table -->
-                <main class="flex-grow-1 d-flex flex-column p-3">
+                <main class="flex-grow-1 d-flex flex-column p-3 bg-white">
+                    <div class="row mb-3">
+                        <div class="col-2">
+                            <div
+                                class="alert-container critical-container d-flex align-items-center justify-content-center text-center">
+                                <% const crit_count=(tickets || []).filter(t=> t.priority === "Critical").length; %>
+                                    <div class="div">
+                                        <span class="alert-container-header">
+                                            <%= crit_count %>
+                                        </span><br>
+                                        <span>Open Critical Tickets</span>
+                                    </div>
+
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div
+                                class="alert-container completed-container d-flex align-items-center justify-content-center text-center">
+                                <% const closed_count=(tickets || []).filter(t=> t.status === "Closed").length; %>
+                                    <div class="div">
+                                        <span class="alert-container-header">
+                                            <%= closed_count %>
+                                        </span><br>
+                                        <span>Completed Tickets</span>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div
+                                class="alert-container open-container d-flex align-items-center justify-content-center text-center">
+                                <% const open_count=(tickets || []).filter(t=> t.status === "Open").length; %>
+                                    <div class="div">
+                                        <span class="alert-container-header">
+                                            <%= open_count %>
+                                        </span><br>
+                                        <span>Completed Tickets</span>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div
+                                class="alert-container in-progress-container d-flex align-items-center justify-content-center text-center">
+                                <% const progress_count=(tickets || []).filter(t=> t.status === "In Progress").length;
+                                    %>
+                                    <div class="div">
+                                        <span class="alert-container-header">
+                                            <%= progress_count %>
+                                        </span><br>
+                                        <span>Tickets In-Progress</span>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div
+                                class="alert-container review-container d-flex align-items-center justify-content-center text-center">
+                                <% const review_count=(tickets || []).filter(t=> t.status === "Review").length;
+                                    %>
+                                    <div class="div">
+                                        <span class="alert-container-header">
+                                            <%= review_count %>
+                                        </span><br>
+                                        <span>Tickets Under Review</span>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div
+                                class="alert-container total-container d-flex align-items-center justify-content-center text-center">
+                                <% const total_count=(tickets || []).length; %>
+                                    <div class="div">
+                                        <span class="alert-container-header">
+                                            <%= total_count %>
+                                        </span><br>
+                                        <span>Total Tickets</span>
+                                    </div>
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="tickets-wrap flex-grow-1 overflow-auto bg-white-gray">
                         <table class="tickets bg-white-gray">
                             <thead class="bg-gray">
