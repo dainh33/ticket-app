@@ -334,6 +334,7 @@ body {
   height: 140px;
   border-radius: 12px;
   font-size: 22px;
+  font-family: "Play", sans-serif;
 }
 
 .critical-container {
@@ -356,4 +357,6 @@ body {
 }
 .alert-container-header {
   font-size: 64px;
+  font-weight: bold;
+  font-family: "Noto Sans", sans-serif !important;
 }

@@ -69,6 +69,10 @@ app.use("/users", userRoutes);
 //MongoDB
 mongoose.connect(process.env.MONGO_URI);
 
+//escapes any special character so that regex match doesnt get messed up
+function escapeRegex(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
 //pages
 app.get("/", async (req, res) => {
   if (!req.session?.userId) {
@@ -90,25 +94,52 @@ app.get("/", async (req, res) => {
   let limit = parseInt(req.query.perPage || "50", 10);
   if (!ALLOWED_LIMITS.includes(limit)) limit = 50;
 
-  let category = String(req.query.category || "").trim();
-  if (!ALLOWED_CATEGORIES.includes(category)) category = "";
+  const category = String(req.query.category || "").trim();
+  const safeCategory = ALLOWED_CATEGORIES.includes(category) ? category : "";
 
-  const name = req.query.name === "1";
+  const myTickets = req.query.name === "1";
+  const q = String(req.query.q || "")
+    .trim()
+    .slice(0, 80);
 
+  //filter content
   const filter = {};
-  if (category) filter.category = category;
-  if (name) filter.assignee = req.session.userName;
 
-  const skip = (page - 1) * limit;
+  if (safeCategory) filter.category = safeCategory;
 
-  const [tickets, total] = await Promise.all([
-    Ticket.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
-    Ticket.countDocuments(filter),
-  ]);
+  if (myTickets) {
+    const userName = req.session?.userName;
+    if (!userName) return res.redirect("/login");
+    filter.assignee = userName;
+  }
 
+  if (q) {
+    const regex = new RegExp(escapeRegex(q), "i");
+    filter.$or = [
+      { ticketNumber: regex },
+      { requester: regex },
+      { title: regex },
+      { subjectLine: regex },
+      { description: regex },
+      { category: regex },
+      { priority: regex },
+      { status: regex },
+      { assignee: regex },
+    ];
+  }
+
+  const total = await Ticket.countDocuments(filter);
   const totalPages = Math.max(1, Math.ceil(total / limit));
 
   if (page > totalPages) page = totalPages;
+
+  const skip = (page - 1) * limit;
+
+  const tickets = await Ticket.find(filter)
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit)
+    .lean();
 
   res.render("pages/page-home", {
     tickets,
@@ -118,8 +149,10 @@ app.get("/", async (req, res) => {
     hasNext: page < totalPages,
     perPage: limit,
     perPageOptions: ALLOWED_LIMITS,
-    category,
-    name,
+    category: safeCategory,
+    q,
+    showAlerts: myTickets || q,
+    name: myTickets ? "1" : "",
   });
 });
 app.get("/login", redirectIfAuthed, (req, res) => res.render("pages/login"));
