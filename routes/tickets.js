@@ -81,6 +81,30 @@ router.post("/:id/claim", async (req, res) => {
     return res.status(500).send("Failed to claim ticket");
   }
 });
+router.post("/:id/unclaim", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).send("Ticket not found");
+    }
+
+    const userEmail = req.session?.userEmail;
+    const userName = req.session?.userName;
+    if (!req.session?.userId || !userName) return res.redirect("/login");
+
+    const updated = await Ticket.findOneAndUpdate(
+      { _id: id, assignee: userName },
+      { $set: { assignee: "Unclaimed" } },
+      { new: true }
+    );
+
+    return res.redirect(`/tickets/${id}`);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Failed to unclaim ticket");
+  }
+});
 //routes/tickets.js
 router.post("/newMessage", async (req, res) => {
   const { ticketId, Name, message } = req.body;

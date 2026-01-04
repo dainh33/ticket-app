@@ -67,7 +67,11 @@
                                                 <button type="submit" class="btn btn-success btn-sm">Claim</button>
                                             </form>
                                             <% } else if (userName && ticket.assignee===userName) { %>
-                                                <span class="badge bg-success ms-2">You</span>
+                                                <form method="POST" action="/tickets/<%= ticket._id %>/unclaim"
+                                                    class="d-inline ms-2">
+                                                    <button type="submit"
+                                                        class="btn btn-success btn-sm">Unclaim</button>
+                                                </form>
                                                 <% } %>
                                 </h4>
                                 <h4>Requester: <%= ticket.requester %>

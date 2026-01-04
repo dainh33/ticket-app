@@ -61,11 +61,11 @@
                         <span>Messages</span>
                     </a>
 
-                    <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="/">
+                    <!-- <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="/">
                         <form method="POST" action="/logout">
                             <button class="btn btn-outline-secondary">Logout</button>
                         </form>
-                    </a>
+                    </a> -->
 
                     <div class="mt-auto ms-1">
                         <hr>
@@ -76,6 +76,9 @@
                             </div>
                             <div class="col-8">
                                 <%= user.name %>
+                                    <form method="POST" action="/logout">
+                                        <button class="btn logout-btn">Logout</button>
+                                    </form>
                             </div>
                         </div>
                     </div>

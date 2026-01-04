@@ -309,3 +309,7 @@ body {
   width: 100% !important;
   max-width: 800px !important;
 }
+
+.logout-btn {
+  color: rgb(146, 146, 146);
+}
