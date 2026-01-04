@@ -1,11 +1,15 @@
 <%- include("../partials/header", { title: "Overview" }) %>
 
-
     <body id="page-home">
         <section class="">
             <div class="d-flex height-align">
                 <!-- left navbar -->
+
                 <nav class="nav flex-column border-end p-3 flex-shrink-0 sidebar text-white-gray">
+                    <div class="text-center">
+                        <img class="navbar-brand logo text-center" src="/icons/test-logo.png" href="/">
+                    </div>
+                    <hr class="mb-3">
                     <a class="nav-link d-flex align-items-center gap-2 text-white-gray" href="/">
                         <img class="icon" src="/icons/analytics.png">
                         <span>Dashboard</span>
@@ -63,6 +67,18 @@
                         </form>
                     </a>
 
+                    <div class="mt-auto ms-1">
+                        <hr>
+                        <div class="row align-items-center">
+                            <div class="col-4">
+                                <img src="<%= (user && user.pfpUrl) ? user.pfpUrl : '/icons/user.png' %>"
+                                    class="user-pfp" />
+                            </div>
+                            <div class="col-8">
+                                <%= user.name %>
+                            </div>
+                        </div>
+                    </div>
                 </nav>
 
                 <!-- ticket table -->
@@ -178,7 +194,7 @@
             </div>
         </section>
 
-        <div id="addTicketModal" class="modal" tabindex="-1">
+        <div id="addTicketModal" class="modal glass-modal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -188,37 +204,45 @@
                     <div class="modal-body">
                         <div class="d-flex align-items-top justify-content-center">
                             <form method="POST" action="/tickets/create">
-                                <div class="mb-1">
-                                    <label for="ticketNumber" class="form-label">Ticket Number</label>
-                                    <input type="text" inputmode="numeric" pattern="\d{4}" maxlength="4"
-                                        class="form-control form-control-lg" id="ticketNumber" name="ticketNumber"
-                                        placeholder="0001" required />
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-1">
+                                            <label for="ticketNumber" class="form-label">Ticket Number</label>
+                                            <input type="text" inputmode="numeric" pattern="\d{4}" maxlength="4"
+                                                class="form-control form-control-lg" id="ticketNumber"
+                                                name="ticketNumber" placeholder="0001" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-1">
+                                            <label for="requester" class="form-label">Requester</label>
+                                            <input type="text" class="form-control form-control-lg" id="requester"
+                                                name="requester" placeholder="First Last" required />
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="mb-1">
-                                    <label for="requester" class="form-label">Requester</label>
-                                    <input type="text" class="form-control form-control-lg" id="requester"
-                                        name="requester" placeholder="First Last" required />
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-1">
+                                            <label for="dueDate" class="form-label">Due Date</label>
+                                            <input type="date" class="form-control form-control-lg" id="dueDate"
+                                                name="dueDate" placeholder="basic, manager, admin" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-1">
+                                            <label for="category" class="form-label">Category</label>
+                                            <select type="" class="form-control form-control-lg" id="category"
+                                                name="category" required>
+                                                <option value="Billing">Billing</option>
+                                                <option value="Technical">Technical</option>
+                                                <option value="Admin">Admin</option>
+                                                <option value="Bug">Bug</option>
+                                                <option value="Security">Security</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="mb-1">
-                                    <label for="dueDate" class="form-label">Due Date</label>
-                                    <input type="date" class="form-control form-control-lg" id="dueDate" name="dueDate"
-                                        placeholder="basic, manager, admin" required />
-                                </div>
-
-                                <div class="mb-1">
-                                    <label for="category" class="form-label">Category</label>
-                                    <select type="" class="form-control form-control-lg" id="category" name="category"
-                                        required>
-                                        <option value="Billing">Billing</option>
-                                        <option value="Technical">Technical</option>
-                                        <option value="Admin">Admin</option>
-                                        <option value="Bug">Bug</option>
-                                        <option value="Security">Security</option>
-                                    </select>
-                                </div>
-
                                 <div class="mb-1">
                                     <label for="title" class="form-label">Title</label>
                                     <input type="text" class="form-control form-control-lg" id="title" name="title"

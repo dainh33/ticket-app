@@ -2,9 +2,13 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
+dotenv.config({ path: path.resolve(__dirname, ".env") });
 const mongoose = require("mongoose");
 const Ticket = require("./models/Ticket");
+const User = require("./models/User");
 const session = require("express-session");
+const userRoutes = require("./routes/users");
+
 const { MongoStore } = require("connect-mongo");
 const {
   requireAuth,
@@ -22,16 +26,7 @@ if (isNaN(portNumber)) {
   process.exit(1);
 }
 
-dotenv.config({ path: path.resolve(__dirname, ".env") });
-
 const app = express();
-
-app.use(bodyParser.urlencoded({ extended: false }));
-
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
-app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static("public"));
 
 app.use(
   session({
@@ -50,6 +45,26 @@ app.use(
     },
   })
 );
+
+app.use(async (req, res, next) => {
+  res.locals.user = null;
+
+  if (req.session?.userId) {
+    res.locals.user = await User.findById(req.session.userId)
+      .select("name email role pfpUrl")
+      .lean();
+  }
+
+  next();
+});
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static("public"));
+app.use("/users", userRoutes);
 
 //MongoDB
 mongoose.connect(process.env.MONGO_URI);
@@ -109,6 +124,8 @@ app.get("/", async (req, res) => {
 });
 app.get("/login", redirectIfAuthed, (req, res) => res.render("pages/login"));
 app.get("/landing", async (req, res) => res.render("pages/page-landing"));
+app.get("/settings", async (req, res) => res.render("pages/page-settings"));
+
 app.get("/admin", requireRole("admin"), (req, res) =>
   res.render("pages/create-user-admin")
 );

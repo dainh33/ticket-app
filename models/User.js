@@ -27,6 +27,9 @@ const userSchema = new mongoose.Schema(
       default: "basic",
     },
     isActive: { type: Boolean, default: true },
+    //cloudinary pfps
+    pfpId: { type: String, trim: true, default: "" },
+    pfpUrl: { type: String, trim: true, default: "" },
   },
   { timestamps: true }
 );
